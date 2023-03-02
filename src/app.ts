@@ -1,5 +1,6 @@
 import express, { Application } from 'express'
 import routerHealth from './helpers/health'
+import routerUser from './modules/user/http/routes'
 import HandlerErrors from './helpers/errors'
 
 class App {
@@ -8,7 +9,7 @@ class App {
   constructor() {
     this.expressApp = express()
     this.mountHealthCheck()
-    //this.mountRoutes()
+    this.mountRoutes()
     this.mountErrors()
   }
 
@@ -17,9 +18,9 @@ class App {
     this.expressApp.use('/', routerHealth)
   }
 
-  /*mountRoutes(): void {
-    this.expressApp.use('/user')
-  }*/
+  mountRoutes(): void {
+    this.expressApp.use('/user', routerUser)
+  }
 
   mountErrors(): void {
     this.expressApp.use(HandlerErrors.notFound)
